@@ -15,8 +15,8 @@ export class Employee {
 }
 
 export class EmployeeCadastro {
-    public employee_name: string;
-    public employee_salary: string;
-    public employee_age: number;
+    public name: string;
+    public salary: string;
+    public age: number;
     public profile_image: string;
 }

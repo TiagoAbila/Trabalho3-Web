@@ -19,7 +19,7 @@
           <label for="inputAvatar">Avatar</label>
           <input type="text" class="form-control" id="inputAvatar" [(ngModel)]="selectedEmployee.profile_image">
         </div>
-        <button type="button" class="btn btn-primary" (click)="onClickEditar(e.id)">Salvar</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">Salvar</button>
       </div>
     </div>
   </div>
@@ -45,9 +45,17 @@
         <td>{{e.employee_age}}</td>
         <td>{{e.profile_image}}</td>
         <td><button type="button" class="btn btn-primary" (click)="onClickEditar(e.id)">Editar</button>
-          <button type="button" class="btn btn-danger" (click)="onClickExcluir()">Excluir</button>
+          <button type="button" class="btn btn-danger" (click)="openModal(template, e.id)">Excluir</button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Deseja mesmo deletar esse empregado?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
+  </div>
+</ng-template>

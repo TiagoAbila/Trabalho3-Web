@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   public employees: Employee[] = [];
   public selectedEmployee: Employee = new Employee();
   public modalRef: BsModalRef;
+  public title = 'Cadastrar Empregado';
   private idToBeDeleted: number;
 
   constructor(private http: HttpClient,
@@ -23,15 +24,16 @@ export class AppComponent implements OnInit {
   }
 
   public getAll() {
-    this.http.get('http://dummy.restapiexample.com/api/v1/employees')
+    this.http.get('	http://rest-api-employees.jmborges.site/api/v1/employees')
       .subscribe(res => {
         this.setEmployees(res);
       });
   }
 
-  public onClickEditar(id: number) {
+  public onClickEditar(id: string) {
     console.log(id);
     this.selectedEmployee = this.employees.find(e => e.id === id);
+    this.title = 'Editar Empregado';
   }
 
   public onSubmit() {
@@ -41,16 +43,16 @@ export class AppComponent implements OnInit {
       salary: this.selectedEmployee.employee_salary,
       profile_image: this.selectedEmployee.profile_image
     };
-
-    if (this.selectedEmployee.id > 0) {
+    if (this.selectedEmployee.id.length > 0) {
       this.updateEmployee(employee, this.selectedEmployee.id.toString());
     } else {
       this.saveEmployee(employee);
     }
+    this.title = 'Cadastrar Empregado';
   }
 
   public deleteEmployee(id: number) {
-    this.http.delete('http://dummy.restapiexample.com/api/v1/delete/' + id.toString())
+    this.http.delete('http://rest-api-employees.jmborges.site/api/v1/delete/' + id.toString())
     .subscribe(() => {
       this.getAll();
     });
@@ -66,7 +68,7 @@ export class AppComponent implements OnInit {
   }
 
   private saveEmployee(employee: EmployeeCadastro) {
-    this.http.post('http://dummy.restapiexample.com/api/v1/create', employee)
+    this.http.post('http://rest-api-employees.jmborges.site/api/v1/create', employee)
     .subscribe(() => {
       this.selectedEmployee = new Employee();
       this.getAll();
@@ -74,7 +76,7 @@ export class AppComponent implements OnInit {
   }
 
   private updateEmployee(employee: EmployeeCadastro, id: string) {
-    this.http.put('http://dummy.restapiexample.com/api/v1/update/' + id, employee)
+    this.http.put('http://rest-api-employees.jmborges.site/api/v1/update/' + id, employee)
     .subscribe(() => {
       this.selectedEmployee = new Employee();
       this.getAll();
